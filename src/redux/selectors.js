@@ -1,10 +1,29 @@
+import { VISIBILITY_FILTERS } from "../constants";
+
 export const getTodoList = store =>
   store && store.todos ? store.todos.allIds : [];
+//does the store exist and does it have todos? if so get all ids
 
 export const getTodoById = (store, id) =>
   store && store.todos && store.todos.byIds
     ? { ...store.todos.byIds[id], id }
     : {};
+//if the store exists, has todoes and ids, then split the ids and grab by id or return empty
+
+export const getTodosByVisibilityFilter = (store, visibilityFilter) => {
+  const allTodos = getTodos(store);
+  switch (visibilityFilter) {
+    case VISIBILITY_FILTERS.COMPLETED:
+      return allTodos.filter(todo => todo.completed);
+    case VISIBILITY_FILTERS.INCOMPLETE:
+      return allTodos.filter(todo => !todo.completed);
+    case VISIBILITY_FILTERS.ALL:
+    default:
+      return allTodos;
+  }
+};
+
+//switch statement are kinda like if else statements
 
 /**
  * example of a slightly more complex selector

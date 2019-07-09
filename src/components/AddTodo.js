@@ -1,5 +1,8 @@
 import React from "react";
 
+import { connect } from "react-redux";
+import { addTodo } from "../redux/actions";
+
 class AddTodo extends React.Component {
   constructor(props) {
     super(props);
@@ -12,7 +15,9 @@ class AddTodo extends React.Component {
 
   handleAddTodo = () => {
     // dispatches actions to add todo
-    // sets state back to empty string
+    this.props.addTodo(this.state.input);
+    // sets state back to empty string otherwise it permanently remains as state
+    this.setState({ input: "" });
   };
 
   render() {
@@ -30,4 +35,12 @@ class AddTodo extends React.Component {
   }
 }
 
-export default AddTodo;
+//exports
+// connect() function
+// mapstatetoprops is null
+//mapdispatchtoprops is the add to do action
+// then our component Addtodo
+export default connect(
+  null,
+  { addTodo }
+)(AddTodo);
